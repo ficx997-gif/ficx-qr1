@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Ambroisie | Premium Digital Menu</title>
+    <meta name="description" content="Experience culinary excellence. Browse our exclusive premium digital menu and order directly to your table.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#fdfbf7',
+                            100: '#fbf7ed',
+                            200: '#f4e9d0',
+                            300: '#ecdaa3',
+                            400: '#e1c370',
+                            500: '#d4a3 solution37', 
+                            600: '#c58d2b',
+                            700: '#a46e22',
+                            800: '#84541f',
+                            900: '#6c441c',
+                            DEFAULT: '#c58d2b'
+                        },
+                        luxury: {
+                            black: '#0A0A0A',
+                            cardDark: '#121212',
+                            cardLight: '#FAFAFA'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white dark:bg-luxury-black text-neutral-900 dark:text-neutral-100 font-sans antialiased transition-colors duration-300"
+      x-data="menuSystem()" x-init="initMenu()">
+
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-luxury-black/80 border-b border-neutral-200/50 dark:border-neutral-800/50 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="#" class="font-serif text-2xl font-bold tracking-widest text-gold-600 dark:text-gold-400">L'AMBROISIE</a>
+            
+            <div class="flex items-center gap-4">
+                <button @click="toggleTheme()" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors" aria-label="Toggle Theme">
+                    <i class="fa-solid" :class="darkMode ? 'fa-sun text-gold-400' : 'fa-moon text-neutral-600'"></i>
+                </button>
+                <a href="#contact" class="text-xs uppercase tracking-widest border border-gold-500/30 px-3 py-1.5 rounded text-gold-600 dark:text-gold-400 hover:bg-gold-500 hover:text-white transition-all duration-300">
+                    Book Table
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative h-[45vh] sm:h-[55vh] flex items-center justify-center overflow-hidden bg-luxury-black">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80" 
+                 alt="Premium restaurant interior ambiance" 
+                 class="w-full h-full object-cover opacity-40 scale-105 animate-[pulse_8s_infinite_alternate]">
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/50 dark:from-luxury-black"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-2xl mx-auto mt-8">
+            <div class="mb-4 inline-block p-1 rounded-full border border-gold-500/30 bg-black/40 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=150&h=150&q=80" 
+                     alt="L'Ambroisie Logo" 
+                     class="w-16 h-16 rounded-full object-cover border border-gold-500">
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-wide text-neutral-900 dark:text-white drop-shadow-sm">
+                L'Ambroisie
+            </h1>
+            <div class="w-12 h-[1px] bg-gold-500 mx-auto my-3"></div>
+            <p class="font-serif italic text-lg sm:text-xl text-neutral-700 dark:text-gold-200/80 tracking-wide">
+                Haute Cuisine & Avant-Garde Gastronomy
+            </p>
+        </div>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 relative z-20">
+        
+        <div class="sticky top-16 z-40 bg-white/90 dark:bg-luxury-black/90 py-4 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-900 mb-8 transition-colors duration-300">
+            <div class="flex flex-col gap-4">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 text-sm"></i>
+                    <input type="text" x-model="searchQuery" placeholder="Search our signature dishes..." 
+                           class="w-full pl-11 pr-4 py-3 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50 text-sm focus:outline-none focus:border-gold-500 dark:focus:border-gold-500 transition-all text-neutral-900 dark:text-neutral-100">
+                </div>
+
+                <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-4 px-4 scroll-smooth snap-x">
+                    <button @click="activeCategory = 'all'" 
+                            class="snap-items px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium whitespace-nowrap transition-all duration-300"
+                            :class="activeCategory === 'all' ? 'bg-gold text-white shadow-lg shadow-gold/20' : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 border border-transparent dark:border-neutral-800'">
+                        All Creations
+                    </button>
+                    <template x-for="cat in categories" :key="cat">
+                        <button @click="activeCategory = cat" 
+                                class="snap-items px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium whitespace-nowrap transition-all duration-300"
+                                :class="activeCategory === cat ? 'bg-gold text-white shadow-lg shadow-gold/20' : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 border border-transparent dark:border-neutral-800'"
+                                x-text="cat">
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <section class="min-h-[40vh]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <template x-for="item in filteredItems" :key="item.id">
+                    <div class="group bg-luxury-cardLight dark:bg-luxury-cardDark rounded-2xl p-4 flex gap-4 border border-neutral-100 dark:border-neutral-900 hover:border-gold-500/30 dark:hover:border-gold-500/30 transition-all duration-500 relative overflow-hidden"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-4"
+                         x-transition:enter-end="opacity-100 transform translate-y-0">
+                        
+                        <template x-if="item.popular">
+                            <span class="absolute top-0 right-0 bg-gold-600 text-white text-[9px] font-sans tracking-widest uppercase font-semibold px-3 py-1 rounded-bl-xl shadow-sm z-10">
+                                Chef Choice
+                            </span>
+                        </template>
+
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 relative bg-neutral-200 dark:bg-neutral-800">
+                            <img :src="item.image" :alt="item.name" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                        </div>
+
+                        <div class="flex flex-col justify-between flex-grow">
+                            <div>
+                                <div class="flex justify-between items-start gap-2 pr-12">
+                                    <h3 class="font-serif text-lg sm:text-xl font-semibold tracking-wide text-neutral-900 dark:text-white" x-text="item.name"></h3>
+                                </div>
+                                <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-2 leading-relaxed font-light" x-text="item.description"></p>
+                            </div>
+                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-neutral-100 dark:border-neutral-800/60">
+                                <span class="font-serif text-lg font-medium text-gold-600 dark:text-gold-400" x-text="'$' + item.price.toFixed(2)"></span>
+                                <button @click="triggerWhatsAppOrder(item)" 
+                                        class="text-[11px] uppercase tracking-wider font-medium text-neutral-600 dark:text-neutral-400 hover:text-gold-600 dark:hover:text-gold-400 transition-colors flex items-center gap-1.5 py-1">
+                                    <i class="fa-brands fa-whatsapp text-emerald-500"></i> Order Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div x-show="filteredItems.length === 0" x-cloak class="text-center py-16">
+                <i class="fa-solid fa-utensils text-neutral-300 dark:text-neutral-700 text-4xl mb-3"></i>
+                <p class="text-neutral-500 text-sm font-light">No culinary creations found matching your query.</p>
+            </div>
+        </section>
+
+        <section class="mt-20 border-t border-neutral-100 dark:border-neutral-900 pt-16">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase tracking-widest text-gold-500 font-semibold">Guest Experience</span>
+                <h2 class="font-serif text-3xl sm:text-4xl mt-1 tracking-wide">The Critiques</h2>
+                <div class="w-8 h-[1px] bg-gold-500 mx-auto mt-3"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <template x-for="review in reviews">
+                    <div class="bg-neutral-50 dark:bg-luxury-cardDark/50 border border-neutral-100 dark:border-neutral-900 p-6 rounded-2xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex gap-1 mb-3 text-gold-500 text-xs">
+                                <template x-for="i in review.stars">
+                                    <i class="fa-solid fa-star"></i>
+                                </template>
+                            </div>
+                            <p class="text-xs text-neutral-600 dark:text-neutral-300 italic font-light leading-relaxed" x-text="'&ldquo;' + review.comment + '&rdquo;'"></p>
+                        </div>
+                        <p class="text-[11px] uppercase tracking-wider text-neutral-400 mt-4 font-medium" x-text="'- ' + review.author"></p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <section id="contact" class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch border-t border-neutral-100 dark:border-neutral-900 pt-16 mb-12">
+            <div class="bg-luxury-cardLight dark:bg-luxury-cardDark p-8 rounded-2xl border border-neutral-100 dark:border-neutral-900 flex flex-col justify-between">
+                <div>
+                    <h2 class="font-serif text-2xl tracking-wide text-gold-600 dark:text-gold-400 mb-6">Hours & Presence</h2>
+                    
+                    <div class="space-y-4 text-xs tracking-wide">
+                        <div class="flex justify-between border-b border-neutral-200/60 dark:border-neutral-800 pb-2">
+                            <span class="text-neutral-500 dark:text-neutral-400">Monday - Friday</span>
+                            <span class="font-medium">17:00 - 23:00</span>
+                        </div>
+                        <div class="flex justify-between border-b border-neutral-200/60 dark:border-neutral-800 pb-2">
+                            <span class="text-neutral-500 dark:text-neutral-400">Saturday - Sunday</span>
+                            <span class="font-medium text-gold-600 dark:text-gold-400">12:00 - 00:00</span>
+                        </div>
+                        <div class="pt-4 space-y-2">
+                            <p class="flex items-start gap-3 text-neutral-600 dark:text-neutral-300">
+                                <i class="fa-solid fa-location-dot text-gold-500 mt-0.5"></i>
+                                <span>45 Avenue Montaigne, 75008 Paris, France</span>
+                            </p>
+                            <p class="flex items-center gap-3 text-neutral-600 dark:text-neutral-300">
+                                <i class="fa-solid fa-phone text-gold-500"></i>
+                                <span>+33 1 47 23 45 67</span>
+                            </p>
+                            <p class="flex items-center gap-3 text-neutral-600 dark:text-neutral-300">
+                                <i class="fa-solid fa-envelope text-gold-500"></i>
+                                <span>reservations@lambroisie-premium.com</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-neutral-200/60 dark:border-neutral-800 text-[11px] text-neutral-400 font-light">
+                    * QR Digital Menu updated live via Kitchen Concierge Systems.
+                </div>
+            </div>
+
+            <div class="rounded-2xl overflow-hidden min-h-[280px] border border-neutral-100 dark:border-neutral-900 grayscale opacity-80 hover:grayscale-0 dark:opacity-60 dark:hover:opacity-90 transition-all duration-500">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.221524316904!2d2.3041944!3d48.8634863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fc339ffffff%3A0x6335ea53fc24f60!2sAvenue%20Montaigne%2C%2075008%20Paris!5e0!3m2!1sen!2sfr!4v1710000000000!5m2!1sen!2sfr" 
+                    class="w-full h-full min-h-[300px] border-0" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-neutral-50 dark:bg-neutral-950 py-8 border-t border-neutral-200/40 dark:border-neutral-900 text-center text-xs tracking-widest text-neutral-400 font-light transition-colors duration-300">
+        <p>&copy; 2026 L'Ambroisie Culinary Group. Elegance Assured.</p>
+    </footer>
+
+    <a href="https://wa.me/33147234567?text=Hello%2C%20I%20would%20like%20to%20make%20a%20reservation%20at%20L%27Ambroisie." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white rounded-full p-4 shadow-2xl shadow-emerald-900/30 hover:bg-emerald-500 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center group"
+       aria-label="Contact Concierge on WhatsApp">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-medium uppercase tracking-wider pl-0 group-hover:pl-2">
+            Order Desk
+        </span>
+    </a>
+
+    <script>
+        function menuSystem() {
+            return {
+                darkMode: true,
+                searchQuery: '',
+                activeCategory: 'all',
+                categories: ['Starters', 'Main Courses', 'Desserts', 'Drinks'],
+                menuItems: [
+                    {
+                        id: 1,
+                        name: 'Caviar d\'Aquitaine Tartare',
+                        category: 'Starters',
+                        description: 'Premium Aquitaine caviar served over hand-cut bluefin tuna tartare with a subtle touch of citrus and gold flake garnish.',
+                        price: 48.00,
+                        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80',
+                        popular: true
+                    },
+                    {
+                        id: 2,
+                        name: 'Foie Gras Terrine Royale',
+                        category: 'Starters',
+                        description: 'Artisanal duck liver terrine accompanied by an aged mission fig compote and toasted house brioche.',
+                        price: 36.00,
+                        image: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=300&q=80',
+                        popular: false
+                    },
+                    {
+                        id: 3,
+                        name: 'Wagyu Filet Mignon Reserve',
+                        category: 'Main Courses',
+                        description: 'A5 Miyazaki Wagyu beef served with a velvety parsnip purée, wild chanterelle mushrooms, and black truffle jus reduction.',
+                        price: 95.00,
+                        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80',
+                        popular: true
+                    },
+                    {
+                        id: 4,
+                        name: 'Atlantic Black Cod Glacier',
+                        category: 'Main Courses',
+                        description: 'Miso-marinated pan-seared black cod, served alongside organic baby bok choy and a saffron-infused lemongrass broth.',
+                        price: 62.00,
+                        image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=300&q=80',
+                        popular: false
+                    },
+                    {
+                        id: 5,
+                        name: 'Le Grand Chocolat Praliné',
+                        category: 'Desserts',
+                        description: 'Layers of 72% Valrhona dark chocolate mousse, hazelnut dacquoise, and edible gold leaf.',
+                        price: 24.00,
+                        image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=300&q=80',
+                        popular: true
+                    },
+                    {
+                        id: 6,
+                        name: 'Grand Marnier Soufflé',
+                        category: 'Desserts',
+                        description: 'Classic airy French soufflé infused with premium Grand Marnier liqueur, served with Madagascar vanilla bean crème anglaise.',
+                        price: 22.00,
+                        image: 'https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=300&q=80',
+                        popular: false
+                    },
+                    {
+                        id: 7,
+                        name: 'The Golden Saffron Elixir',
+                        category: 'Drinks',
+                        description: 'Premium distilled botanical spirit essence, real saffron strands, fresh golden citrus juice, finished with artisan tonic.',
+                        price: 18.00,
+                        image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80',
+                        popular: true
+                    },
+                    {
+                        id: 8,
+                        name: 'Château Margaux Vintage Select',
+                        category: 'Drinks',
+                        description: 'An exclusive structural pour of our finest private cellar Bordeaux red wine vintage.',
+                        price: 45.00,
+                        image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=300&q=80',
+                        popular: false
+                    }
+                ],
+                reviews: [
+                    { stars: 5, comment: "The Wagyu Filet Mignon was absolute art. The ambiance and design elements mirror the precise standard of their plates.", author: "Lord Alistair C." },
+                    { stars: 5, comment: "Flawless mobile interface makes scanning and reviewing options effortless at the table. Exceptional presentation.", author: "Elena R." },
+                    { stars: 5, comment: "A masterful balance of black, gold, and absolute luxury. The Caviar starter is non-negotiable.", author: "Chef Jean-Luc M." }
+                ],
+                
+                initMenu() {
+                    // Initialize theme mechanics
+                    if (localStorage.getItem('theme') === 'light') {
+                        this.darkMode = false;
+                        document.documentElement.classList.remove('dark');
+                    } else {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+
+                toggleTheme() {
+                    this.darkMode = !this.darkMode;
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+                },
+
+                get filteredItems() {
+                    return this.menuItems.filter(item => {
+                        const matchCategory = this.activeCategory === 'all' || item.category === this.activeCategory;
+                        const matchQuery = item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+                                           item.description.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        return matchCategory && matchQuery;
+                    });
+                },
+
+                triggerWhatsAppOrder(item) {
+                    const businessNumber = "33147234567"; // Replace with operational restaurant endpoint
+                    const dynamicMessage = encodeURIComponent(`Hello L'Ambroisie, I am at table no. 4 and would like to order: ${item.name} ($${item.price.toFixed(2)})`);
+                    window.open(`https://wa.me/${businessNumber}?text=${dynamicMessage}`, '_blank');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
